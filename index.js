@@ -56,6 +56,12 @@
                 $betNumberButton.addEventListener(
                   'click',
                   function () {
+                    if (numbers.indexOf(index) !== -1)
+                      return alert('You already filled this number');
+                    if (element['max-number'] == numbers.length)
+                      return alert(
+                        'You already filled in the maximum amount of numbers',
+                      );
                     numbers.push(index);
                     this.setAttribute('class', 'selected-bet-number-button');
                   },
