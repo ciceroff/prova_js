@@ -1,6 +1,7 @@
 (function (DOM) {
   'use strict';
   var types = [];
+  var numbers = [];
   function app() {
     return {
       init: function () {
@@ -42,10 +43,28 @@
             function () {
               var $panel = new DOM('[data-js="bet-panel"]').get()[0];
               $panel.innerHTML = '';
+              numbers = [];
               var $description = document.createElement('div');
               $description.setAttribute('class', 'bet-description');
               $description.innerHTML = `<strong>Fill your Bet</strong><br>${element.description}`;
+              var $numbers = document.createElement('div');
+              $numbers.setAttribute('class', 'bet-numbers');
+              for (let index = 1; index <= element.range; index++) {
+                var $betNumberButton = document.createElement('button');
+                $betNumberButton.setAttribute('class', 'bet-number-button');
+                $betNumberButton.textContent = index;
+                $betNumberButton.addEventListener(
+                  'click',
+                  function () {
+                    numbers.push(index);
+                    this.setAttribute('class', 'selected-bet-number-button');
+                  },
+                  false,
+                );
+                $numbers.appendChild($betNumberButton);
+              }
               $panel.appendChild($description);
+              $panel.appendChild($numbers);
             },
             false,
           );
