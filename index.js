@@ -52,6 +52,7 @@
               for (let index = 1; index <= element.range; index++) {
                 var $betNumberButton = document.createElement('button');
                 $betNumberButton.setAttribute('class', 'bet-number-button');
+                $betNumberButton.setAttribute('data-js', `${index}`);
                 $betNumberButton.textContent = index;
                 $betNumberButton.addEventListener(
                   'click',
@@ -69,8 +70,41 @@
                 );
                 $numbers.appendChild($betNumberButton);
               }
+
+              var $resultButtons = document.createElement('div');
+              $resultButtons.setAttribute('class', 'result-buttons');
+
+              var $clearButton = document.createElement('button');
+              $clearButton.textContent = 'Clear game';
+              $clearButton.setAttribute('class', 'clear-complete-buttons');
+
+              var $completeButton = document.createElement('button');
+              $completeButton.setAttribute('class', 'clear-complete-buttons');
+              $completeButton.textContent = 'Complete game';
+
+              var $addToCartButton = document.createElement('button');
+              $addToCartButton.setAttribute('class', 'add-to-cart-button');
+              $addToCartButton.innerHTML = '<p></p> Add to Cart';
+
+              $resultButtons.appendChild($clearButton);
+              $resultButtons.appendChild($completeButton);
+              $resultButtons.appendChild($addToCartButton);
+
+              console.log();
+              $clearButton.addEventListener(
+                'click',
+                function () {
+                  numbers.forEach((e) => {
+                    var $cleanButton = new DOM(`[data-js="${e}"]`).get()[0];
+                    $cleanButton.setAttribute('class', 'bet-number-button');
+                  });
+                  numbers = [];
+                },
+                false,
+              );
               $panel.appendChild($description);
               $panel.appendChild($numbers);
+              $panel.appendChild($resultButtons);
             },
             false,
           );
