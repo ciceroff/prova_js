@@ -31,13 +31,24 @@
       addTypeButtons: function addTypeButtons() {
         var $typeButtonsDiv = new DOM('[data-js="game-type-buttons"]').get()[0];
         types.forEach((element) => {
-          console.log(element.type);
           var $button = document.createElement('button');
+
           $button.textContent = element.type;
           $button.setAttribute('class', 'game-type-buttons');
           $button.style.color = element.color;
           $button.style['border-color'] = element.color;
-          console.log($typeButtonsDiv);
+          $button.addEventListener(
+            'click',
+            function () {
+              var $panel = new DOM('[data-js="bet-panel"]').get()[0];
+              $panel.innerHTML = '';
+              var $description = document.createElement('div');
+              $description.setAttribute('class', 'bet-description');
+              $description.innerHTML = `<strong>Fill your Bet</strong><br>${element.description}`;
+              $panel.appendChild($description);
+            },
+            false,
+          );
           $typeButtonsDiv.appendChild($button);
         });
       },
