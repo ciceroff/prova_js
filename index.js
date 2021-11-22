@@ -16,7 +16,7 @@
         var ajax = new XMLHttpRequest();
 
         ajax.open('GET', './games.json', true);
-        console.log(ajax);
+
         ajax.send();
         ajax.addEventListener('readystatechange', this.handleGamesInfo, false);
       },
@@ -25,7 +25,7 @@
         if (!(this.readyState === 4 && this.status === 200)) return;
         var data = JSON.parse(this.responseText);
         types = data.types;
-        console.log(types.length);
+
         app().addTypeButtons();
       },
 
@@ -77,20 +77,6 @@
               var $clearButton = document.createElement('button');
               $clearButton.textContent = 'Clear game';
               $clearButton.setAttribute('class', 'clear-complete-buttons');
-
-              var $completeButton = document.createElement('button');
-              $completeButton.setAttribute('class', 'clear-complete-buttons');
-              $completeButton.textContent = 'Complete game';
-
-              var $addToCartButton = document.createElement('button');
-              $addToCartButton.setAttribute('class', 'add-to-cart-button');
-              $addToCartButton.innerHTML = '<p></p> Add to Cart';
-
-              $resultButtons.appendChild($clearButton);
-              $resultButtons.appendChild($completeButton);
-              $resultButtons.appendChild($addToCartButton);
-
-              console.log();
               $clearButton.addEventListener(
                 'click',
                 function () {
@@ -102,6 +88,38 @@
                 },
                 false,
               );
+
+              var $completeButton = document.createElement('button');
+              $completeButton.setAttribute('class', 'clear-complete-buttons');
+              $completeButton.textContent = 'Complete game';
+              $completeButton.addEventListener(
+                'click',
+                function () {
+                  while (numbers.length < element['max-number']) {
+                    var number = Math.floor(Math.random() * element.range) + 1;
+                    if (numbers.indexOf(number) === -1) {
+                      var $selectedButton = new DOM(
+                        `[data-js="${number}"]`,
+                      ).get()[0];
+                      $selectedButton.setAttribute(
+                        'class',
+                        'selected-bet-number-button',
+                      );
+                      numbers.push(number);
+                    }
+                  }
+                },
+                false,
+              );
+
+              var $addToCartButton = document.createElement('button');
+              $addToCartButton.setAttribute('class', 'add-to-cart-button');
+              $addToCartButton.innerHTML = '<p></p> Add to Cart';
+
+              $resultButtons.appendChild($clearButton);
+              $resultButtons.appendChild($completeButton);
+              $resultButtons.appendChild($addToCartButton);
+
               $panel.appendChild($description);
               $panel.appendChild($numbers);
               $panel.appendChild($resultButtons);
