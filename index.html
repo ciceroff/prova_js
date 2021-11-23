@@ -5,14 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
-    <title>Document</title>
+    <title>Prova Js</title>
   </head>
   <body>
-    <header><nav></nav></header>
-    <main>
-      <div data-js="game-type-buttons"></div>
-      <div data-js="bet-panel"><p>Cicero</p></div>
-    </main>
+    <header>
+      <a href="#" id="logo"><strong>TGL</strong></a>
+      <a href="#" class="menu-item" id="home"><strong>Home</strong></a>
+      <a href="#" class="menu-item" id="account"><strong>Account</strong></a>
+      <a href="#" class="menu-item" id="logout"
+        ><strong>Log out<span></span></strong
+      ></a>
+    </header>
+
+    <div class="main">
+      <div class="left">
+        <div data-js="new-bet"></div>
+        <div><strong>Choose a game</strong></div>
+        <div data-js="game-type-buttons"></div>
+        <div data-js="bet-panel" class="bet-panel"></div>
+      </div>
+
+      <div data-js="cart" class="cart">
+        <span> <strong>CART</strong></span>
+        <div data-js="cart-bets"></div>
+        <div data-js="cart-total" class="total">
+          <strong>EMPTY CART</strong>
+        </div>
+
+        <button id="save-button">
+          <p>Save</p>
+          <span></span>
+        </button>
+      </div>
+    </div>
 
     <footer></footer>
 

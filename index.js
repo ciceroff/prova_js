@@ -2,6 +2,8 @@
   'use strict';
   var types = [];
   var numbers = [];
+  var cartTotal = 0;
+
   function app() {
     return {
       init: function () {
@@ -41,6 +43,9 @@
           $button.addEventListener(
             'click',
             function () {
+              var $newBet = new DOM('[data-js="new-bet"]').get()[0];
+              $newBet.innerHTML = `<strong>NEW BET</strong> FOR ${element.type.toUpperCase()}`;
+              $newBet.style['color'] = '#707070';
               var $panel = new DOM('[data-js="bet-panel"]').get()[0];
               $panel.innerHTML = '';
               numbers = [];
@@ -74,6 +79,7 @@
               var $resultButtons = document.createElement('div');
               $resultButtons.setAttribute('class', 'result-buttons');
 
+              // ------------------------------------------------- CLEAR GAME
               var $clearButton = document.createElement('button');
               $clearButton.textContent = 'Clear game';
               $clearButton.setAttribute('class', 'clear-complete-buttons');
@@ -88,7 +94,7 @@
                 },
                 false,
               );
-
+              // ------------------------------------------------- COMPLETE GAME
               var $completeButton = document.createElement('button');
               $completeButton.setAttribute('class', 'clear-complete-buttons');
               $completeButton.textContent = 'Complete game';
@@ -112,9 +118,85 @@
                 false,
               );
 
+              // ------------------------------------------------- ADD TO CART
               var $addToCartButton = document.createElement('button');
               $addToCartButton.setAttribute('class', 'add-to-cart-button');
               $addToCartButton.innerHTML = '<p></p> Add to Cart';
+              $addToCartButton.addEventListener(
+                'click',
+                function () {
+                  if (numbers.length < element['max-number'])
+                    return alert(
+                      `Fill all the ${element['max-number']} numbers`,
+                    );
+                  var $cartBets = new DOM('[data-js="cart-bets"]').get()[0];
+                  var $betDiv = document.createElement('div');
+                  var $betDescriptionDiv = document.createElement('div');
+                  var $typeGameDescription = document.createElement('div');
+                  var $trashButton = document.createElement('button');
+                  var $betPrice = document.createElement('p');
+                  var $betType = document.createElement('span');
+
+                  $cartBets.setAttribute('class', 'cart-bets');
+
+                  $betDescriptionDiv.setAttribute('class', 'bet-description');
+                  $typeGameDescription.setAttribute('class', 'bet-game-type');
+                  $betDiv.setAttribute('class', 'bet');
+
+                  $trashButton.setAttribute('class', 'trash-button');
+                  $trashButton.innerHTML = 'Delete';
+                  // ------------------- DELETE BET
+                  $trashButton.addEventListener(
+                    'click',
+                    function () {
+                      $cartBets.removeChild(this.parentElement);
+                      cartTotal -= element.price;
+                      var $cartTotal = new DOM(
+                        '[data-js="cart-total"]',
+                      ).get()[0];
+                      cartTotal > 0
+                        ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: R$${cartTotal}`)
+                        : ($cartTotal.innerHTML =
+                            '<strong>CART EMPTY</strong>');
+                      console.log(cartTotal);
+                    },
+                    false,
+                  );
+
+                  $betDiv.appendChild($trashButton);
+                  var x = numbers
+                    .sort((a, b) => {
+                      return a - b;
+                    })
+                    .toString();
+                  var $p = document.createElement('p');
+                  $betPrice.textContent = element.price;
+                  $betType.textContent = element.type;
+                  $p.innerHTML = x;
+
+                  $typeGameDescription.appendChild($betType);
+                  $typeGameDescription.appendChild($betPrice);
+                  $betDescriptionDiv.appendChild($p);
+                  $betDescriptionDiv.appendChild($typeGameDescription);
+
+                  $betDiv.appendChild($betDescriptionDiv);
+                  $cartBets.appendChild($betDiv);
+
+                  numbers.forEach((e) => {
+                    var $cleanButton = new DOM(`[data-js="${e}"]`).get()[0];
+                    $cleanButton.setAttribute('class', 'bet-number-button');
+                  });
+                  numbers = [];
+                  cartTotal += element.price;
+                  var $cartTotal = new DOM('[data-js="cart-total"]').get()[0];
+                  cartTotal > 0
+                    ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: R$${cartTotal}`)
+                    : ($cartTotal.innerHTML = '<strong>CART EMPTY</strong>');
+                  console.log(cartTotal);
+                },
+                // --------------------------------------------------------
+                false,
+              );
 
               $resultButtons.appendChild($clearButton);
               $resultButtons.appendChild($completeButton);
