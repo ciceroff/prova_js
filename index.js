@@ -1,7 +1,6 @@
 (function (DOM) {
   'use strict';
   var types = [];
-  var currentType;
   var numbers = [];
   var allBets = [];
   var cartTotal = 0;
@@ -200,26 +199,18 @@
                   $trashButton.innerHTML =
                     '<i class="material-icons">delete</i>';
                   // ------------------- DELETE BET
+                  $betDiv.appendChild($trashButton);
                   $trashButton.addEventListener(
                     'click',
                     function () {
-                      $cartBets.removeChild(this.parentElement);
-                      cartTotal -= element.price;
-                      var $cartTotal = new DOM(
-                        '[data-js="cart-total"]',
-                      ).get()[0];
-                      cartTotal > 0
-                        ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: ${formatter.format(
-                            cartTotal,
-                          )}`)
-                        : ($cartTotal.innerHTML = ` <br><strong>CART</strong> TOTAL: ${formatter.format(
-                            cartTotal,
-                          )}`);
+                      app().handleDeleteCart.call(
+                        $trashButton.parentElement,
+                        element,
+                      );
                     },
                     false,
                   );
 
-                  $betDiv.appendChild($trashButton);
                   var x = numbers
                     .sort((a, b) => {
                       return a - b;
@@ -285,6 +276,20 @@
 
           $typeButtonsDiv.appendChild($button);
         });
+      },
+      handleDeleteCart: function handleDeleteCart(element) {
+        var $cartBets = new DOM('[data-js="cart-bets"]').get()[0];
+
+        $cartBets.removeChild(this);
+        cartTotal -= element.price;
+        var $cartTotal = new DOM('[data-js="cart-total"]').get()[0];
+        cartTotal > 0
+          ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: ${formatter.format(
+              cartTotal,
+            )}`)
+          : ($cartTotal.innerHTML = ` <br><strong>CART</strong> TOTAL: ${formatter.format(
+              cartTotal,
+            )}`);
       },
     };
   }
