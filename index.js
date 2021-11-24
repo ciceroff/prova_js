@@ -1,7 +1,9 @@
 (function (DOM) {
   'use strict';
   var types = [];
+  var currentType;
   var numbers = [];
+  var allBets = [];
   var cartTotal = 0;
   var formatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -33,31 +35,64 @@
         types = data.types;
 
         app().addTypeButtons();
+        const $tempButton = document.getElementById('0');
+
+        $tempButton.click();
       },
 
       addTypeButtons: function addTypeButtons() {
         var $typeButtonsDiv = new DOM('[data-js="game-type-buttons"]').get()[0];
+        var count = 0;
         types.forEach((element) => {
           var $button = document.createElement('button');
+          var $cartTotal = new DOM('[data-js="cart-total"]').get()[0];
+          cartTotal > 0
+            ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: ${formatter.format(
+                cartTotal,
+              )}`)
+            : ($cartTotal.innerHTML = ` <br><strong>CART</strong> TOTAL: ${formatter.format(
+                cartTotal,
+              )}`);
 
           $button.textContent = element.type;
           $button.setAttribute('class', 'game-type-buttons');
+          $button.setAttribute('id', `${count}`);
+          count++;
           $button.style.color = element.color;
           $button.style['border-color'] = element.color;
+
           $button.addEventListener(
             'click',
             function () {
+              var id = 0;
+              types.forEach((e) => {
+                var $tempButton = document.getElementById(`${id}`);
+                $tempButton.setAttribute('class', 'game-type-buttons');
+                $tempButton.style.color = e.color;
+                $tempButton.style['border-color'] = e.color;
+                $tempButton.style['backgroundColor'] = '#f7f7f7';
+
+                id++;
+              });
+              this.setAttribute('class', 'selected-game-type-buttons');
+              this.style['color'] = 'white';
+              this.style['backgroundColor'] = element.color;
+
               var $newBet = new DOM('[data-js="new-bet"]').get()[0];
               $newBet.innerHTML = `<strong>NEW BET</strong> FOR ${element.type.toUpperCase()}`;
               $newBet.style['color'] = '#707070';
+
               var $panel = new DOM('[data-js="bet-panel"]').get()[0];
               $panel.innerHTML = '';
               numbers = [];
+
               var $description = document.createElement('div');
               $description.setAttribute('class', 'bet-description');
               $description.innerHTML = `<strong>Fill your Bet</strong><br>${element.description}`;
+
               var $numbers = document.createElement('div');
               $numbers.setAttribute('class', 'bet-numbers');
+
               for (let index = 1; index <= element.range; index++) {
                 var $betNumberButton = document.createElement('button');
                 $betNumberButton.setAttribute('class', 'bet-number-button');
@@ -66,12 +101,17 @@
                 $betNumberButton.addEventListener(
                   'click',
                   function () {
-                    if (numbers.indexOf(index) !== -1)
-                      return alert('You already filled this number');
+                    if (numbers.indexOf(index) !== -1) {
+                      this.setAttribute('class', 'bet-number-button');
+                      numbers.splice(numbers.indexOf(index), 1);
+
+                      return;
+                    }
                     if (element['max-number'] == numbers.length)
                       return alert(
                         'You already filled in the maximum amount of numbers',
                       );
+
                     numbers.push(index);
                     this.setAttribute('class', 'selected-bet-number-button');
                   },
@@ -133,7 +173,9 @@
                 function () {
                   if (numbers.length < element['max-number'])
                     return alert(
-                      `Fill all the ${element['max-number']} numbers`,
+                      `Fill ${
+                        element['max-number'] - numbers.length
+                      } more numbers`,
                     );
                   var $cartBets = new DOM('[data-js="cart-bets"]').get()[0];
                   var $betDiv = document.createElement('div');
@@ -170,9 +212,9 @@
                         ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: ${formatter.format(
                             cartTotal,
                           )}`)
-                        : ($cartTotal.innerHTML =
-                            '<strong>CART EMPTY</strong>');
-                      console.log(cartTotal);
+                        : ($cartTotal.innerHTML = ` <br><strong>CART</strong> TOTAL: ${formatter.format(
+                            cartTotal,
+                          )}`);
                     },
                     false,
                   );
@@ -183,6 +225,14 @@
                       return a - b;
                     })
                     .toString();
+
+                  var tempBet = x.concat(element.type);
+
+                  if (allBets.indexOf(tempBet) !== -1)
+                    return alert('You already added this bet');
+
+                  allBets.push(tempBet);
+
                   var $p = document.createElement('p');
                   $p.style['overflow-wrap'] = 'break-word';
                   $p.style['maxInlineSize'] = '200px';
@@ -207,14 +257,14 @@
                   });
                   numbers = [];
                   cartTotal += element.price;
-                  var $cartTotal = new DOM('[data-js="cart-total"]').get()[0];
 
                   cartTotal > 0
                     ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: ${formatter.format(
                         cartTotal,
                       )}`)
-                    : ($cartTotal.innerHTML = '<strong>CART EMPTY</strong>');
-                  console.log(cartTotal);
+                    : ($cartTotal.innerHTML = `<strong>CART EMPTY</strong> <br><strong>CART</strong> TOTAL: ${formatter.format(
+                        cartTotal,
+                      )}`);
                 },
                 // --------------------------------------------------------
                 false,
@@ -232,6 +282,7 @@
             },
             false,
           );
+
           $typeButtonsDiv.appendChild($button);
         });
       },

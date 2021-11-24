@@ -16,6 +16,7 @@
 }
 .new-bet {
   font-size: larger;
+  margin-bottom: 33px;
 }
 .TGL {
   margin-right: 3rem;
@@ -23,13 +24,16 @@
   margin-top: 0;
   border-bottom: 4px solid #b5c401;
   border-radius: 0.2rem;
-
-  /* width: 50%; */
 }
 .total,
 .total strong {
   background-color: #ffffff;
   color: var(--grey-colors);
+}
+
+.total {
+  margin-bottom: 47px;
+  font-size: larger;
 }
 
 .header-left {
@@ -174,6 +178,20 @@ i {
   transition: background 0.2s;
 }
 
+.selected-game-type-buttons {
+  border: 2px solid;
+  cursor: pointer;
+  font: 700 1.4rem Roboto;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  margin-right: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
 .bet-numbers {
   width: 100%;
   height: 100%;
@@ -231,6 +249,8 @@ i {
   opacity: 1;
   margin-right: 25px;
   margin-left: 100px;
+  overflow-y: auto;
+  max-height: 500px;
 }
 
 .cart-bets {
@@ -254,23 +274,27 @@ i {
 
 .total strong {
   margin: 10px 10px;
+  margin-bottom: 20px;
 }
 .cart span {
   background-color: #ffffff;
   margin-top: 10px;
 }
 
+.cart span strong {
+  font-size: larger;
+}
 #save-button {
-  top: 432px;
-  left: 869px;
+  /* top: 432px;
+  left: 869px; */
   width: 100%;
-  height: 40px;
+  height: 96px;
   text-align: center;
   letter-spacing: 0px;
   color: #27c383;
   font-family: 'Roboto';
   font-weight: bold;
-  font-size: medium;
+  font-size: larger;
   background-color: var(--background-color);
   text-transform: uppercase;
   opacity: 1;
