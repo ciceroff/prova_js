@@ -63,100 +63,7 @@
           $button.addEventListener(
             'click',
             function () {
-              var id = 0;
-              types.forEach((e) => {
-                var $tempButton = document.getElementById(`${id}`);
-                $tempButton.setAttribute('class', 'game-type-buttons');
-                $tempButton.style.color = e.color;
-                $tempButton.style['border-color'] = e.color;
-                $tempButton.style['backgroundColor'] = '#f7f7f7';
-
-                id++;
-              });
-              this.setAttribute('class', 'selected-game-type-buttons');
-              this.style['color'] = 'white';
-              this.style['backgroundColor'] = element.color;
-
-              var $newBet = new DOM('[data-js="new-bet"]').get()[0];
-              $newBet.innerHTML = `<strong>NEW BET</strong> FOR ${element.type.toUpperCase()}`;
-              $newBet.style['color'] = '#707070';
-
-              var $panel = new DOM('[data-js="bet-panel"]').get()[0];
-              $panel.innerHTML = '';
-              numbers = [];
-
-              var $description = document.createElement('div');
-              $description.setAttribute('class', 'bet-description');
-              $description.innerHTML = `<strong>Fill your Bet</strong><br>${element.description}`;
-
-              var $numbers = document.createElement('div');
-              $numbers.setAttribute('class', 'bet-numbers');
-
-              for (let index = 1; index <= element.range; index++) {
-                var $betNumberButton = document.createElement('button');
-                $betNumberButton.setAttribute('class', 'bet-number-button');
-                $betNumberButton.setAttribute('data-js', `${index}`);
-                $betNumberButton.textContent = index;
-                $betNumberButton.addEventListener(
-                  'click',
-                  function () {
-                    app().handleBetNumberButtonClick.call(this, element, index);
-                  },
-                  false,
-                );
-                $numbers.appendChild($betNumberButton);
-              }
-
-              var $resultButtons = document.createElement('div');
-              $resultButtons.setAttribute('class', 'result-buttons');
-
-              // ------------------------------------------------- CLEAR GAME
-              var $clearButton = document.createElement('button');
-              $clearButton.textContent = 'Clear game';
-              $clearButton.setAttribute('class', 'clear-complete-buttons');
-              $clearButton.addEventListener(
-                'click',
-                function () {
-                  app().handleClearButtonClick();
-                },
-                false,
-              );
-
-              // ------------------------------------------------- COMPLETE GAME
-              var $completeButton = document.createElement('button');
-              $completeButton.setAttribute('class', 'clear-complete-buttons');
-              $completeButton.textContent = 'Complete game';
-              $completeButton.addEventListener(
-                'click',
-                function () {
-                  app().handleCompleteClick(element);
-                },
-                false,
-              );
-
-              // ------------------------------------------------- ADD TO CART
-              var $addToCartButton = document.createElement('button');
-              $addToCartButton.setAttribute('id', 'add-to-cart');
-              $addToCartButton.setAttribute('class', 'material-icons');
-              $addToCartButton.innerHTML =
-                '<i class="material-icons" >shopping_cart</i> Add to cart';
-              $addToCartButton.addEventListener(
-                'click',
-                function () {
-                  app().handleAddToCartClick($cartTotal, element);
-                },
-                false,
-              );
-              var $completeClearButtonDiv = document.createElement('div');
-              $completeClearButtonDiv.appendChild($completeButton);
-              $completeClearButtonDiv.appendChild($clearButton);
-
-              $resultButtons.appendChild($completeClearButtonDiv);
-              $resultButtons.appendChild($addToCartButton);
-
-              $panel.appendChild($description);
-              $panel.appendChild($numbers);
-              $panel.appendChild($resultButtons);
+              app().handleTypeButtonClick.call(this, element);
             },
             false,
           );
@@ -296,6 +203,105 @@
           return alert('You already filled in the maximum amount of numbers');
         numbers.push(index);
         this.setAttribute('class', 'selected-bet-number-button');
+      },
+
+      // TYPE BUTTON CLICK FUNCTION
+      handleTypeButtonClick: function handleTypeButtonClick(element) {
+        var $cartTotal = new DOM('[data-js="cart-total"]').get()[0];
+        var id = 0;
+        types.forEach((e) => {
+          var $tempButton = document.getElementById(`${id}`);
+          $tempButton.setAttribute('class', 'game-type-buttons');
+          $tempButton.style.color = e.color;
+          $tempButton.style['border-color'] = e.color;
+          $tempButton.style['backgroundColor'] = '#f7f7f7';
+
+          id++;
+        });
+        this.setAttribute('class', 'selected-game-type-buttons');
+        this.style['color'] = 'white';
+        this.style['backgroundColor'] = element.color;
+
+        var $newBet = new DOM('[data-js="new-bet"]').get()[0];
+        $newBet.innerHTML = `<strong>NEW BET</strong> FOR ${element.type.toUpperCase()}`;
+        $newBet.style['color'] = '#707070';
+
+        var $panel = new DOM('[data-js="bet-panel"]').get()[0];
+        $panel.innerHTML = '';
+        numbers = [];
+
+        var $description = document.createElement('div');
+        $description.setAttribute('class', 'bet-description');
+        $description.innerHTML = `<strong>Fill your Bet</strong><br>${element.description}`;
+
+        var $numbers = document.createElement('div');
+        $numbers.setAttribute('class', 'bet-numbers');
+
+        for (let index = 1; index <= element.range; index++) {
+          var $betNumberButton = document.createElement('button');
+          $betNumberButton.setAttribute('class', 'bet-number-button');
+          $betNumberButton.setAttribute('data-js', `${index}`);
+          $betNumberButton.textContent = index;
+          $betNumberButton.addEventListener(
+            'click',
+            function () {
+              app().handleBetNumberButtonClick.call(this, element, index);
+            },
+            false,
+          );
+          $numbers.appendChild($betNumberButton);
+        }
+
+        var $resultButtons = document.createElement('div');
+        $resultButtons.setAttribute('class', 'result-buttons');
+
+        // ------------------------------------------------- CLEAR GAME
+        var $clearButton = document.createElement('button');
+        $clearButton.textContent = 'Clear game';
+        $clearButton.setAttribute('class', 'clear-complete-buttons');
+        $clearButton.addEventListener(
+          'click',
+          function () {
+            app().handleClearButtonClick();
+          },
+          false,
+        );
+
+        // ------------------------------------------------- COMPLETE GAME
+        var $completeButton = document.createElement('button');
+        $completeButton.setAttribute('class', 'clear-complete-buttons');
+        $completeButton.textContent = 'Complete game';
+        $completeButton.addEventListener(
+          'click',
+          function () {
+            app().handleCompleteClick(element);
+          },
+          false,
+        );
+
+        // ------------------------------------------------- ADD TO CART
+        var $addToCartButton = document.createElement('button');
+        $addToCartButton.setAttribute('id', 'add-to-cart');
+        $addToCartButton.setAttribute('class', 'material-icons');
+        $addToCartButton.innerHTML =
+          '<i class="material-icons" >shopping_cart</i> Add to cart';
+        $addToCartButton.addEventListener(
+          'click',
+          function () {
+            app().handleAddToCartClick($cartTotal, element);
+          },
+          false,
+        );
+        var $completeClearButtonDiv = document.createElement('div');
+        $completeClearButtonDiv.appendChild($completeButton);
+        $completeClearButtonDiv.appendChild($clearButton);
+
+        $resultButtons.appendChild($completeClearButtonDiv);
+        $resultButtons.appendChild($addToCartButton);
+
+        $panel.appendChild($description);
+        $panel.appendChild($numbers);
+        $panel.appendChild($resultButtons);
       },
     };
   }
