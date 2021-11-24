@@ -100,17 +100,7 @@
                 $betNumberButton.addEventListener(
                   'click',
                   function () {
-                    if (numbers.indexOf(index) !== -1) {
-                      this.setAttribute('class', 'bet-number-button');
-                      numbers.splice(numbers.indexOf(index), 1);
-                      return;
-                    }
-                    if (element['max-number'] == numbers.length)
-                      return alert(
-                        'You already filled in the maximum amount of numbers',
-                      );
-                    numbers.push(index);
-                    this.setAttribute('class', 'selected-bet-number-button');
+                    app().handleBetNumberButtonClick.call(this, element, index);
                   },
                   false,
                 );
@@ -290,6 +280,22 @@
           $cleanButton.setAttribute('class', 'bet-number-button');
         });
         numbers = [];
+      },
+
+      // BET SELECT NUMBER CLICK
+      handleBetNumberButtonClick: function handleBetNumberButtonClick(
+        element,
+        index,
+      ) {
+        if (numbers.indexOf(index) !== -1) {
+          this.setAttribute('class', 'bet-number-button');
+          numbers.splice(numbers.indexOf(index), 1);
+          return;
+        }
+        if (element['max-number'] == numbers.length)
+          return alert('You already filled in the maximum amount of numbers');
+        numbers.push(index);
+        this.setAttribute('class', 'selected-bet-number-button');
       },
     };
   }
