@@ -145,19 +145,7 @@
               $completeButton.addEventListener(
                 'click',
                 function () {
-                  while (numbers.length < element['max-number']) {
-                    var number = Math.floor(Math.random() * element.range) + 1;
-                    if (numbers.indexOf(number) === -1) {
-                      var $selectedButton = new DOM(
-                        `[data-js="${number}"]`,
-                      ).get()[0];
-                      $selectedButton.setAttribute(
-                        'class',
-                        'selected-bet-number-button',
-                      );
-                      numbers.push(number);
-                    }
-                  }
+                  app().handleCompleteClick(element);
                 },
                 false,
               );
@@ -192,6 +180,8 @@
           $typeButtonsDiv.appendChild($button);
         });
       },
+
+      //DELETE FROM CART FUNCTION
       handleDeleteCart: function handleDeleteCart(element) {
         var $cartBets = new DOM('[data-js="cart-bets"]').get()[0];
 
@@ -206,6 +196,8 @@
               cartTotal,
             )}`);
       },
+
+      //ADD TO CART FUNCTION
       handleAddToCartClick: function handleAddToCartClick($cartTotal, element) {
         if (numbers.length < element['max-number'])
           return alert(
@@ -284,6 +276,17 @@
           : ($cartTotal.innerHTML = `<strong>CART EMPTY</strong> <br><strong>CART</strong> TOTAL: ${formatter.format(
               cartTotal,
             )}`);
+      },
+      //COMPLETE FUNCTION
+      handleCompleteClick: function handleCompleteClick(element) {
+        while (numbers.length < element['max-number']) {
+          var number = Math.floor(Math.random() * element.range) + 1;
+          if (numbers.indexOf(number) === -1) {
+            var $selectedButton = new DOM(`[data-js="${number}"]`).get()[0];
+            $selectedButton.setAttribute('class', 'selected-bet-number-button');
+            numbers.push(number);
+          }
+        }
       },
     };
   }
