@@ -3,6 +3,10 @@
   var types = [];
   var numbers = [];
   var cartTotal = 0;
+  var formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  });
 
   function app() {
     return {
@@ -120,8 +124,10 @@
 
               // ------------------------------------------------- ADD TO CART
               var $addToCartButton = document.createElement('button');
-              $addToCartButton.setAttribute('class', 'add-to-cart-button');
-              $addToCartButton.innerHTML = '<p></p> Add to Cart';
+              $addToCartButton.setAttribute('id', 'add-to-cart');
+              $addToCartButton.setAttribute('class', 'material-icons');
+              $addToCartButton.innerHTML =
+                '<i class="material-icons" >shopping_cart</i> Add to cart';
               $addToCartButton.addEventListener(
                 'click',
                 function () {
@@ -139,12 +145,18 @@
 
                   $cartBets.setAttribute('class', 'cart-bets');
 
-                  $betDescriptionDiv.setAttribute('class', 'bet-description');
+                  $betDescriptionDiv.setAttribute(
+                    'class',
+                    'bet-description-cart',
+                  );
+                  $betDescriptionDiv.style['borderColor'] = element.color;
+
                   $typeGameDescription.setAttribute('class', 'bet-game-type');
                   $betDiv.setAttribute('class', 'bet');
 
                   $trashButton.setAttribute('class', 'trash-button');
-                  $trashButton.innerHTML = 'Delete';
+                  $trashButton.innerHTML =
+                    '<i class="material-icons">delete</i>';
                   // ------------------- DELETE BET
                   $trashButton.addEventListener(
                     'click',
@@ -155,7 +167,9 @@
                         '[data-js="cart-total"]',
                       ).get()[0];
                       cartTotal > 0
-                        ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: R$${cartTotal}`)
+                        ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: ${formatter.format(
+                            cartTotal,
+                          )}`)
                         : ($cartTotal.innerHTML =
                             '<strong>CART EMPTY</strong>');
                       console.log(cartTotal);
@@ -170,8 +184,13 @@
                     })
                     .toString();
                   var $p = document.createElement('p');
-                  $betPrice.textContent = element.price;
+                  $p.style['overflow-wrap'] = 'break-word';
+                  $p.style['maxInlineSize'] = '200px';
+                  $betPrice.textContent = `${formatter.format(element.price)}`;
                   $betType.textContent = element.type;
+                  $betType.style['color'] = element.color;
+                  $betType.style['marginRight'] = '10px';
+
                   $p.innerHTML = x;
 
                   $typeGameDescription.appendChild($betType);
@@ -189,17 +208,22 @@
                   numbers = [];
                   cartTotal += element.price;
                   var $cartTotal = new DOM('[data-js="cart-total"]').get()[0];
+
                   cartTotal > 0
-                    ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: R$${cartTotal}`)
+                    ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: ${formatter.format(
+                        cartTotal,
+                      )}`)
                     : ($cartTotal.innerHTML = '<strong>CART EMPTY</strong>');
                   console.log(cartTotal);
                 },
                 // --------------------------------------------------------
                 false,
               );
+              var $completeClearButtonDiv = document.createElement('div');
+              $completeClearButtonDiv.appendChild($completeButton);
+              $completeClearButtonDiv.appendChild($clearButton);
 
-              $resultButtons.appendChild($clearButton);
-              $resultButtons.appendChild($completeButton);
+              $resultButtons.appendChild($completeClearButtonDiv);
               $resultButtons.appendChild($addToCartButton);
 
               $panel.appendChild($description);

@@ -6,20 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
     <title>Prova Js</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,700;1,300;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
   </head>
   <body>
     <header>
-      <a href="#" id="logo"><strong>TGL</strong></a>
-      <a href="#" class="menu-item" id="home"><strong>Home</strong></a>
-      <a href="#" class="menu-item" id="account"><strong>Account</strong></a>
-      <a href="#" class="menu-item" id="logout"
-        ><strong>Log out<span></span></strong
-      ></a>
+      <div class="header-left">
+        <div class="TGL">
+          <a href="#" id="logo"><strong>TGL</strong></a>
+        </div>
+
+        <a href="#" class="menu-item" id="home"><strong>Home</strong></a>
+      </div>
+      <div class="header-right">
+        <a href="#" class="menu-item" id="account"><strong>Account</strong></a>
+        <a href="#" class="menu-item" id="logout"
+          ><strong>Log out</strong> <i class="material-icons">east</i></a
+        >
+      </div>
     </header>
 
     <div class="main">
       <div class="left">
-        <div data-js="new-bet"></div>
+        <div data-js="new-bet" class="new-bet"></div>
         <div><strong>Choose a game</strong></div>
         <div data-js="game-type-buttons"></div>
         <div data-js="bet-panel" class="bet-panel"></div>
@@ -34,12 +51,12 @@
 
         <button id="save-button">
           <p>Save</p>
-          <span></span>
+          <i class="material-icons">east</i>
         </button>
       </div>
     </div>
 
-    <footer></footer>
+    <footer><p>Copyright 2020 Luby Software</p></footer>
 
     <script src="DOM.js"></script>
     <script src="index.js"></script>

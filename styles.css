@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   background-color: var(--background-color);
+  font-family: 'Roboto';
 }
 :root {
   --numbers-color: #adc0c4;
@@ -10,17 +11,46 @@
 }
 .cart span strong {
   background-color: #ffffff;
+  margin-left: 10px;
+  margin-top: 10px;
 }
+.new-bet {
+  font-size: larger;
+}
+.TGL {
+  margin-right: 3rem;
+  margin-left: 3rem;
+  margin-top: 0;
+  border-bottom: 4px solid #b5c401;
+  border-radius: 0.2rem;
 
+  /* width: 50%; */
+}
 .total,
 .total strong {
   background-color: #ffffff;
+  color: var(--grey-colors);
+}
+
+.header-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-right i {
+  margin-left: 10px;
+  font-size: 19px;
 }
 
 strong {
   color: #707070;
 }
 header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   margin-left: 40px;
   border-bottom: 2px solid #ebebeb;
   opacity: 1;
@@ -45,10 +75,32 @@ body {
 .bet-description {
   color: #868686;
   max-width: 700px;
+  font-family: 'Roboto';
+}
+
+.bet-description-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  border-radius: 2px;
+  opacity: 1;
+  color: #868686;
+  border-left: 4px solid;
+  padding-left: 10px;
+  background-color: #ffffff;
+}
+.bet-description-cart p,
+span,
+i {
+  background-color: #ffffff;
 }
 
 .bet {
   background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 32px;
 }
 
 #logo {
@@ -57,7 +109,7 @@ body {
   width: 86px;
   height: 53px;
   text-align: center;
-  font: italic normal bold 44px/70px Helvetica Neue;
+  font: italic normal bold 44px/70px Roboto;
   letter-spacing: 0px;
   color: #707070;
   opacity: 1;
@@ -70,11 +122,12 @@ body {
   width: 56px;
   height: 24px;
   text-align: center;
-  font: italic normal bold 20px/70px Helvetica Neue;
+  font: italic normal bold 20px/70px Roboto;
   letter-spacing: 0px;
   color: #707070;
   opacity: 1;
   text-decoration-line: none;
+  margin-bottom: 35px;
 }
 
 #account {
@@ -83,18 +136,34 @@ body {
   width: 80px;
   height: 24px;
   text-align: center;
-  font: italic normal bold 20px/70px Helvetica Neue;
+  font: italic normal bold 20px/70px Roboto;
   letter-spacing: 0px;
   color: #707070;
   opacity: 1;
   text-decoration-line: none;
 }
 
+#logout {
+  top: 28px;
+  left: 944px;
+  width: 80px;
+  height: 24px;
+  text-align: center;
+  font: italic normal bold 20px/70px Roboto;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+  text-decoration-line: none;
+}
+#logout i {
+  background-color: var(--background-color);
+}
+
 .game-type-buttons {
   background: #f7f7f7;
   border: 2px solid;
   cursor: pointer;
-  font: 700 1.4rem Archivo;
+  font: 700 1.4rem Roboto;
   align-items: center;
   padding: 0.4rem 0.8rem;
   margin-right: 1rem;
@@ -115,6 +184,7 @@ body {
   flex-direction: column;
   height: 100%;
   width: 100%;
+  margin-bottom: 100px;
 }
 .bet-number-button {
   background-color: #adc0c4;
@@ -160,10 +230,12 @@ body {
   border-radius: 10px;
   opacity: 1;
   margin-right: 25px;
+  margin-left: 100px;
 }
 
 .cart-bets {
   background-color: #ffffff;
+  margin: 10px 10px;
 }
 .cart-bets p {
   background-color: #ffffff;
@@ -174,12 +246,20 @@ body {
 
 .bet-game-type {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  align-items: baseline;
   background-color: #ffffff;
+  margin: 0;
+}
+
+.total strong {
+  margin: 10px 10px;
 }
 .cart span {
   background-color: #ffffff;
+  margin-top: 10px;
 }
+
 #save-button {
   top: 432px;
   left: 869px;
@@ -188,11 +268,70 @@ body {
   text-align: center;
   letter-spacing: 0px;
   color: #27c383;
+  font-family: 'Roboto';
+  font-weight: bold;
+  font-size: medium;
   background-color: var(--background-color);
   text-transform: uppercase;
   opacity: 1;
   border: 1px solid #e2e2e2;
   border-radius: 0px 0px 10px 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#save-button i {
+  background-color: var(--background-color);
+}
+.trash-button {
+  background-color: white;
+  color: var(--grey-colors);
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  border: 0;
+  text-decoration: none;
+}
+
+.clear-complete-buttons {
+  border: 1px solid #27c383;
+  border-radius: 10px;
+  opacity: 1;
+  width: 164px;
+  height: 52px;
+  font: normal normal medium 16px/24px Roboto;
+  letter-spacing: 0px;
+  color: #27c383;
+  opacity: 1;
+  margin-right: 25px;
+}
+
+.result-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+#add-to-cart {
+  margin-right: 0px;
+  background: #27c383 0% 0% no-repeat padding-box;
+  border: 1px solid #27c383;
+  border-radius: 10px;
+  opacity: 1;
+  width: 209px;
+  height: 52px;
+  font: normal normal bold 16px/24px Roboto;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+#add-to-cart i {
+  background-color: #27c383;
 }
 
 #save-button p {
@@ -200,4 +339,16 @@ body {
 }
 #save-button span {
   background-color: var(--background-color);
+}
+
+footer {
+  border-top: 1px solid var(--grey-colors);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  height: 60px;
+  width: 100%;
+  margin: auto;
+  color: var(--grey-colors);
 }
