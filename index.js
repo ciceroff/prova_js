@@ -137,6 +137,7 @@
                 },
                 false,
               );
+
               // ------------------------------------------------- COMPLETE GAME
               var $completeButton = document.createElement('button');
               $completeButton.setAttribute('class', 'clear-complete-buttons');
@@ -170,94 +171,8 @@
               $addToCartButton.addEventListener(
                 'click',
                 function () {
-                  if (numbers.length < element['max-number'])
-                    return alert(
-                      `Fill ${
-                        element['max-number'] - numbers.length
-                      } more numbers`,
-                    );
-                  var $cartBets = new DOM('[data-js="cart-bets"]').get()[0];
-                  var $betDiv = document.createElement('div');
-                  var $betDescriptionDiv = document.createElement('div');
-                  var $typeGameDescription = document.createElement('div');
-                  var $trashButton = document.createElement('button');
-                  var $betPrice = document.createElement('p');
-                  var $betType = document.createElement('span');
-
-                  $cartBets.setAttribute('class', 'cart-bets');
-
-                  $betDescriptionDiv.setAttribute(
-                    'class',
-                    'bet-description-cart',
-                  );
-                  $betDescriptionDiv.style['borderColor'] = element.color;
-
-                  $typeGameDescription.setAttribute('class', 'bet-game-type');
-                  $betDiv.setAttribute('class', 'bet');
-
-                  $trashButton.setAttribute('class', 'trash-button');
-                  $trashButton.innerHTML =
-                    '<i class="material-icons">delete</i>';
-                  // ------------------- DELETE BET
-                  $betDiv.appendChild($trashButton);
-                  $trashButton.addEventListener(
-                    'click',
-                    function () {
-                      app().handleDeleteCart.call(
-                        $trashButton.parentElement,
-                        element,
-                      );
-                    },
-                    false,
-                  );
-
-                  var x = numbers
-                    .sort((a, b) => {
-                      return a - b;
-                    })
-                    .toString();
-
-                  var tempBet = x.concat(element.type);
-
-                  if (allBets.indexOf(tempBet) !== -1)
-                    return alert('You already added this bet');
-
-                  allBets.push(tempBet);
-
-                  var $p = document.createElement('p');
-                  $p.style['overflow-wrap'] = 'break-word';
-                  $p.style['maxInlineSize'] = '200px';
-                  $betPrice.textContent = `${formatter.format(element.price)}`;
-                  $betType.textContent = element.type;
-                  $betType.style['color'] = element.color;
-                  $betType.style['marginRight'] = '10px';
-
-                  $p.innerHTML = x;
-
-                  $typeGameDescription.appendChild($betType);
-                  $typeGameDescription.appendChild($betPrice);
-                  $betDescriptionDiv.appendChild($p);
-                  $betDescriptionDiv.appendChild($typeGameDescription);
-
-                  $betDiv.appendChild($betDescriptionDiv);
-                  $cartBets.appendChild($betDiv);
-
-                  numbers.forEach((e) => {
-                    var $cleanButton = new DOM(`[data-js="${e}"]`).get()[0];
-                    $cleanButton.setAttribute('class', 'bet-number-button');
-                  });
-                  numbers = [];
-                  cartTotal += element.price;
-
-                  cartTotal > 0
-                    ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: ${formatter.format(
-                        cartTotal,
-                      )}`)
-                    : ($cartTotal.innerHTML = `<strong>CART EMPTY</strong> <br><strong>CART</strong> TOTAL: ${formatter.format(
-                        cartTotal,
-                      )}`);
+                  app().handleAddToCartClick($cartTotal, element);
                 },
-                // --------------------------------------------------------
                 false,
               );
               var $completeClearButtonDiv = document.createElement('div');
@@ -288,6 +203,85 @@
               cartTotal,
             )}`)
           : ($cartTotal.innerHTML = ` <br><strong>CART</strong> TOTAL: ${formatter.format(
+              cartTotal,
+            )}`);
+      },
+      handleAddToCartClick: function handleAddToCartClick($cartTotal, element) {
+        if (numbers.length < element['max-number'])
+          return alert(
+            `Fill ${element['max-number'] - numbers.length} more numbers`,
+          );
+        var $cartBets = new DOM('[data-js="cart-bets"]').get()[0];
+        var $betDiv = document.createElement('div');
+        var $betDescriptionDiv = document.createElement('div');
+        var $typeGameDescription = document.createElement('div');
+        var $trashButton = document.createElement('button');
+        var $betPrice = document.createElement('p');
+        var $betType = document.createElement('span');
+
+        $cartBets.setAttribute('class', 'cart-bets');
+
+        $betDescriptionDiv.setAttribute('class', 'bet-description-cart');
+        $betDescriptionDiv.style['borderColor'] = element.color;
+
+        $typeGameDescription.setAttribute('class', 'bet-game-type');
+        $betDiv.setAttribute('class', 'bet');
+
+        $trashButton.setAttribute('class', 'trash-button');
+        $trashButton.innerHTML = '<i class="material-icons">delete</i>';
+        // ------------------- DELETE BET
+        $betDiv.appendChild($trashButton);
+        $trashButton.addEventListener(
+          'click',
+          function () {
+            app().handleDeleteCart.call($trashButton.parentElement, element);
+          },
+          false,
+        );
+
+        var x = numbers
+          .sort((a, b) => {
+            return a - b;
+          })
+          .toString();
+
+        var tempBet = x.concat(element.type);
+
+        if (allBets.indexOf(tempBet) !== -1)
+          return alert('You already added this bet');
+
+        allBets.push(tempBet);
+
+        var $p = document.createElement('p');
+        $p.style['overflow-wrap'] = 'break-word';
+        $p.style['maxInlineSize'] = '200px';
+        $betPrice.textContent = `${formatter.format(element.price)}`;
+        $betType.textContent = element.type;
+        $betType.style['color'] = element.color;
+        $betType.style['marginRight'] = '10px';
+
+        $p.innerHTML = x;
+
+        $typeGameDescription.appendChild($betType);
+        $typeGameDescription.appendChild($betPrice);
+        $betDescriptionDiv.appendChild($p);
+        $betDescriptionDiv.appendChild($typeGameDescription);
+
+        $betDiv.appendChild($betDescriptionDiv);
+        $cartBets.appendChild($betDiv);
+
+        numbers.forEach((e) => {
+          var $cleanButton = new DOM(`[data-js="${e}"]`).get()[0];
+          $cleanButton.setAttribute('class', 'bet-number-button');
+        });
+        numbers = [];
+        cartTotal += element.price;
+
+        cartTotal > 0
+          ? ($cartTotal.innerHTML = `<strong>CART</strong> TOTAL: ${formatter.format(
+              cartTotal,
+            )}`)
+          : ($cartTotal.innerHTML = `<strong>CART EMPTY</strong> <br><strong>CART</strong> TOTAL: ${formatter.format(
               cartTotal,
             )}`);
       },
