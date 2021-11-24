@@ -103,14 +103,12 @@
                     if (numbers.indexOf(index) !== -1) {
                       this.setAttribute('class', 'bet-number-button');
                       numbers.splice(numbers.indexOf(index), 1);
-
                       return;
                     }
                     if (element['max-number'] == numbers.length)
                       return alert(
                         'You already filled in the maximum amount of numbers',
                       );
-
                     numbers.push(index);
                     this.setAttribute('class', 'selected-bet-number-button');
                   },
@@ -129,11 +127,7 @@
               $clearButton.addEventListener(
                 'click',
                 function () {
-                  numbers.forEach((e) => {
-                    var $cleanButton = new DOM(`[data-js="${e}"]`).get()[0];
-                    $cleanButton.setAttribute('class', 'bet-number-button');
-                  });
-                  numbers = [];
+                  app().handleClearButtonClick();
                 },
                 false,
               );
@@ -287,6 +281,15 @@
             numbers.push(number);
           }
         }
+      },
+
+      //CLEAR FUNCTION
+      handleClearButtonClick: function handleClearButtonClick() {
+        numbers.forEach((e) => {
+          var $cleanButton = new DOM(`[data-js="${e}"]`).get()[0];
+          $cleanButton.setAttribute('class', 'bet-number-button');
+        });
+        numbers = [];
       },
     };
   }
